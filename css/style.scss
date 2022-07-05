@@ -1,0 +1,137 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Raleway", sans-serif;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  background-color: rgb(38, 82, 62);
+  color: white;
+}
+
+main {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 25% 50% 25%;
+  grid-template-rows: 100px auto auto;
+  grid-template-areas:
+    ". a ."
+    ". b ."
+    ". c .";
+  #bgContainer {
+    background-image: url("https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/Zugpsitze_mountain.jpg?crop=0%2C176%2C3008%2C1654&wid=4000&hei=2200&scl=0.752");
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    position: absolute;
+    z-index: 1;
+  }
+  #inputContainer {
+    grid-area: a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+  #listContainer {
+    grid-area: b;
+    border-radius: 10px;
+    background-color: rgb(217, 233, 227);
+    z-index: 2;
+  }
+  #doneContainer {
+    grid-area: c;
+    // padding: 10px;
+    z-index: 2;
+  }
+  ul {
+    li {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 40px auto 40px;
+      grid-template-rows: 40px;
+      grid-template-areas: "a b c";
+      padding: 5px;
+      align-items: center;
+      list-style-type: none;
+      background: #e9f2ee;
+      transition: 0.2s;
+      user-select: none;
+      p {
+        grid-area: b;
+        justify-self: start;
+        padding: 10px;
+      }
+      &:nth-child(even) {
+        background-color: #d9e9e3;
+      }
+      &:hover {
+        background-color: #a7bdb3;
+      }
+      &.true {
+        background-color: #6d9181;
+        text-decoration: line-through;
+      }
+    }
+  }
+}
+
+input {
+  &[type="text"] {
+    border: 1px solid #26523e;
+    padding: 10px;
+    min-width: 150px;
+    height: 30px;
+    border-style: none;
+    cursor: text;
+
+    background-color: #d9e9e3;
+    border-radius: 10px 0px 0px 10px;
+    color: #26523e;
+  }
+  &[type="submit"] {
+    border: none;
+    padding: 10px;
+    width: 100px;
+    height: 50px;
+    cursor: pointer;
+    background-color: #26523e;
+    border-radius: 0px 30px 30px 0px;
+    font-family: "Raleway", sans-serif;
+    font-weight: 500;
+    color: white;
+  }
+  &[type="checkbox"] {
+    grid-area: a;
+    justify-self: center;
+    cursor: pointer;
+    border: none;
+    width: 15px;
+    height: 15px;
+    &:active {
+      background-color: #6d9181;
+      text-decoration: line-through;
+    }
+  }
+}
+
+img {
+  grid-area: c;
+  justify-self: center;
+  padding: 10px;
+  width: 20px;
+  &:hover {
+    background-color: #26523e;
+    color: white;
+    border-radius: 10%;
+  }
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css\style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Raleway"
+    />
+    <title>To-Do Assignment</title>
+    <!-- <script
+      src="https://kit.fontawesome.com/277ad33d51.js"
+      crossorigin="anonymous"
+    ></script> -->
+  </head>
+
+  <body>
+    <header>
+      <h1>Hallo To-Do lijstje!</h1>
+    </header>
+    <main id="main">
+      <div id="bgContainer"></div>
+      <div id="inputContainer">
+        <input type="text" id="item" placeholder="voer hier uw taak in" />
+        <input type="submit" id="submit" value="Toevoegen" />
+      </div>
+      <div id="listContainer">
+        <ul id="list"></ul>
+      </div>
+      <div id="doneContainer" class="finished">
+        <h2>Afgerond:</h2>
+        <ul id="done-list"></ul>
+      </div>
+    </main>
+    <footer></footer>
+    <script src="api-client.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
