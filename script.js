@@ -1,121 +1,99 @@
+// ******************************** \\
+
+// startpagina
+
 getFetchData();
 
+const Ul = document.getElementsByTagName("ul");
 const parentUl = document.getElementById("list");
 const parentFinishedUl = document.getElementById("done-list");
 const inputField = document.getElementById("item");
 const listItemsLi = document.querySelector("li");
 
-// Event listeners
+// ******************************** \\
 
-parentUl.addEventListener("click", (event) => {
-  let name = event.target.tagName;
+// input & checkbox eventListeners
 
-  switch (name) {
-    case "IMG":
-      deleteFunction(event);
-      break;
-    case "INPUT":
-      changeFunction(event);
-      break;
-  }
-});
+submit.addEventListener("click", newInput);
 
-parentFinishedUl.addEventListener("click", (event) => {
-  let name = event.target.tagName;
-
-  switch (name) {
-    case "IMG":
-      deleteFunction(event);
-      break;
-    case "INPUT":
-      changeFunction(event);
-      break;
-    default:
-      console.log(
-        "Naam bevat iets waarvoor geen functie is geschreven..",
-        name
-      );
-  }
-});
-
-submit.addEventListener("click", inputFunction);
-inputField.addEventListener("keypress", function (event) {
+inputField.addEventListener("keypress", (event) => {
   if (event.key === "Enter") {
-    inputFunction();
+    newInput();
   }
 });
 
-//
+for (let item of Ul) {
+  item.addEventListener("click", (event) => {
+    let className = event.target.className;
+    className.toLowerCase;
+
+    switch (className) {
+      case "fa-solid fa-xmark fa-lg":
+        deleteFunction(event);
+        break;
+      case "checkbox":
+        checkboxFunction(event);
+        break;
+      case "fa-solid fa-pencil":
+      case "fa-solid fa-floppy-disk":
+        edit(event);
+        break;
+    }
+  });
+}
+
+// ******************************** \\
 
 // functions
 
-// Add new Item to API and DOM
+// Add (new) items to DOM
 
-function itemCheck(description, id, done) {
+function addItem(description, id, done) {
+  const newLi = document.createElement("li");
+  newLi.setAttribute("id", id);
+  newLi.className = done;
+
+  const newCheckbox = document.createElement("input");
+  newCheckbox.type = "checkbox";
+  newCheckbox.className = "checkbox";
+
+  const newInput = document.createElement("input");
+  newInput.type = "text";
+  newInput.classList.add("text", done);
+  newInput.setAttribute("disabled", "disabled");
+
+  const editImg = document.createElement("i");
+  editImg.className = "fa-solid fa-pencil";
+
+  const deleteImg = document.createElement("i");
+  deleteImg.className = "fa-solid fa-xmark fa-lg";
+
+  // check if "done" is true or false
   switch (done) {
     case true:
-      addToFinished(description, id, done);
+      newCheckbox.checked = true;
+      parentFinishedUl.prepend(newLi);
+      newLi.append(newCheckbox, newInput, editImg, deleteImg);
+      newInput.value = description;
       break;
     case false:
-      addToDoItem(description, id, done);
+      parentUl.prepend(newLi);
+      newLi.append(newCheckbox, newInput, editImg, deleteImg);
+      newInput.value = description;
       break;
 
     default:
-      console.log(
-        "Er is helaas een fout opgetreden bij het item met naam: ",
-        description
-      );
+      alert("er is helaas iets fout gegaan. Probeer het nog eens");
+      break;
   }
-}
-
-function addToFinished(description, id, done) {
-  const newLi = document.createElement("li");
-  const newInput = document.createElement("input");
-  const newP = document.createElement("p");
-  const deleteImg = document.createElement("img");
-
-  newInput.type = "checkbox";
-  newInput.checked = true;
-  newLi.setAttribute("id", id);
-  newLi.className = done;
-  newP.className = "textItem";
-  deleteImg.src = "/todo-list-assignment/images/xIcon.png";
-  deleteImg.className = "image";
-
-  // add together
-  parentFinishedUl.prepend(newLi);
-  newLi.append(newInput, newP, deleteImg);
-  newP.textContent = description;
 
   // clear input field value
   document.getElementById("item").value = "";
 }
 
-function addToDoItem(description, id, done) {
-  const newLi = document.createElement("li");
-  const newInput = document.createElement("input");
-  const newP = document.createElement("p");
-  const deleteImg = document.createElement("img");
+// new input function
 
-  newInput.type = "checkbox";
-  newLi.setAttribute("id", id);
-  newLi.className = done;
-  newP.className = "textItem";
-  deleteImg.src = "/todo-list-assignment/images/xIcon.png";
-  deleteImg.className = "image";
-
-  // add together
-  parentUl.appendChild(newLi);
-  newLi.append(newInput, newP, deleteImg);
-  newP.textContent = description;
-
-  // clear input field value
-  document.getElementById("item").value = "";
-}
-
-// input functions
-
-function inputFunction() {
+function newInput() {
   const userInput = document.getElementById("item").value;
   if (userInput != "") {
     let task = { description: `${userInput}`, done: false };
@@ -125,41 +103,73 @@ function inputFunction() {
     return;
   }
 }
+// edit function
 
-//
+function edit(data) {
+  let id = data.target.parentElement.id;
+  let className = data.target.className;
+  let textElement = data.target.previousElementSibling;
+  let textValue = textElement.value;
 
-// change function
+  // close function
+  function editClose(textValue) {
+    let changeItem = { description: textValue };
+    putFetchData(changeItem, id);
+    data.target.className = "fa-solid fa-pencil";
+    textElement.setAttribute("disabled", "");
+  }
 
-function changeFunction(data) {
-  let changeId = data.target.parentElement.id;
-  const cb = data.target.tagName === "INPUT";
-  console.log("changeId in changeFunction: ", changeId);
-  if (cb != true) {
-    return;
-  } else if (data.target.type === "checkbox" && data.target.checked === true) {
-    let changeItem = { done: true };
-    putFetchData(changeItem, changeId);
-    data.target.parentElement.remove();
-  } else if (data.target.type === "checkbox" && data.target.checked === false) {
-    let changeItem = { done: false };
-    putFetchData(changeItem, changeId);
-    data.target.parentElement.remove();
+  // voorwaarden close function
+
+  if (className === "fa-solid fa-pencil") {
+    let changeIcon = data.target;
+    changeIcon.className = "fa-solid fa-floppy-disk";
+    textElement.removeAttribute("disabled");
+    textElement.focus();
+  } else if (className === "fa-solid fa-floppy-disk") {
+    editClose(textValue);
+  }
+
+  textElement.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+      textValue = event.target.value;
+      editClose(textValue);
+    }
+  });
+}
+
+// checkbox function
+
+function checkboxFunction(data) {
+  let id = data.target.parentElement.id;
+  let checkbox = data.target.checked;
+  let changeItem = "";
+  let parentLi = data.target.parentElement;
+  let input = data.target.nextElementSibling;
+
+  switch (checkbox) {
+    case true:
+      changeItem = { done: true };
+      putFetchData(changeItem, id);
+      input.className = "text true";
+      parentLi.className = true;
+      parentFinishedUl.appendChild(parentLi);
+      break;
+
+    case false:
+      changeItem = { done: false };
+      putFetchData(changeItem, id);
+      input.className = "text false";
+      parentLi.className = false;
+      parentUl.appendChild(parentLi);
+      break;
   }
 }
 
 // delete function
 
 function deleteFunction(data) {
-  console.log("data in deleteFunction: ", data);
-  let listItem = data.target.parentElement.id;
-  console.log("listItem in deleteFunction: ", listItem);
-  deleteFetchData(listItem);
+  let id = data.target.parentElement.id;
+  deleteFetchData(id);
   data.target.parentElement.remove();
 }
-
-// //
-// let checkBox = document.getElementsByTagName("input[type=checkbox]");
-// console.log("checkbox: ", checkBox);
-// for (let check of checkBox) {
-//   check.addEventListener("click", console.log("op checkbox geklikt"));
-// }

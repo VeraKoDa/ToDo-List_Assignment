@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3000";
+const baseUrl = `http://localhost:3000`;
 
 // GET data from server
 
@@ -11,17 +11,18 @@ const getFetchData = async () =>
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log("getFetchData response: ", data);
       data.forEach((element) => {
         let itemDescription = element.description;
         let itemId = element._id;
         let done = element.done;
-        itemCheck(itemDescription, itemId, done);
+        addItem(itemDescription, itemId, done);
       });
     })
-    .catch((error) => console.log(error));
-
-// getFetchData();
+    .catch((err) =>
+      alert(
+        `Helaas is er iets mis gegaan.. Probeer het nog eens. Omschrijving: ${err}`
+      )
+    );
 
 // POST item on server
 
@@ -35,11 +36,11 @@ const postFetchData = async (taskInput) =>
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log("data van postFetch: ", data);
       let itemDescription = data.description;
       let itemId = data._id;
       let done = data.done;
-      itemCheck(itemDescription, itemId, done);
+      addItem(itemDescription, itemId, done);
+      console.log(`Taak is toegevoegd in de database`);
     })
     .catch((err) =>
       alert(
@@ -50,7 +51,7 @@ const postFetchData = async (taskInput) =>
 // CHANGE item on server
 
 const putFetchData = async (changeItem, changeId) =>
-  await fetch(baseUrl + "/" + changeId, {
+  await fetch(baseUrl + `/` + changeId, {
     method: "PUT",
     body: JSON.stringify(changeItem),
     headers: {
@@ -58,17 +59,24 @@ const putFetchData = async (changeItem, changeId) =>
     },
   })
     .then((response) => response.json())
-    .then((data) => {
-      console.log("response data van putFetchData: ", data);
-      let itemDescription = data.description;
-      let itemId = data._id;
-      let done = data.done;
-      itemCheck(itemDescription, itemId, done);
-    });
+    .then(() => {
+      console.log(`Taak is aangepast in de database`);
+    })
+    .catch((err) =>
+      alert(
+        `Helaas is er iets mis gegaan.. Probeer het nog eens. Omschrijving: ${err}`
+      )
+    );
 
 // DELETE item on server
 
 const deleteFetchData = (deleteItem) =>
-  fetch(baseUrl + "/" + deleteItem, {
+  fetch(baseUrl + `/` + deleteItem, {
     method: "DELETE",
-  });
+  })
+    .then(() => console.log(`Taak is verwijderd uit de database`))
+    .catch((err) =>
+      alert(
+        `Helaas is er iets mis gegaan.. Probeer het nog eens. Omschrijving: ${err}`
+      )
+    );

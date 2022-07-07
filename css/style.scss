@@ -1,9 +1,6 @@
 * {
   margin: 0;
   padding: 0;
-}
-
-body {
   font-family: "Raleway", sans-serif;
 }
 
@@ -13,7 +10,7 @@ header {
   justify-content: center;
   height: 100px;
   background-color: rgb(38, 82, 62);
-  color: white;
+  color: #e9f2ee;
 }
 
 main {
@@ -41,36 +38,112 @@ main {
     align-items: center;
     justify-content: center;
     z-index: 2;
+    input {
+      &[type="text"] {
+        padding: 10px;
+        min-width: 150px;
+        height: 30px;
+        border-style: none;
+        cursor: text;
+        background-color: #d9e9e3;
+        border-radius: 10px 0px 0px 10px;
+        color: #26523e;
+        &:focus {
+          outline: 1px solid #26523e;
+        }
+      }
+      &[type="submit"] {
+        border: none;
+        padding: 10px;
+        width: 100px;
+        height: 50px;
+        cursor: pointer;
+        background-color: #26523e;
+        border-radius: 0px 10px 10px 0px;
+        font-family: "Raleway", sans-serif;
+        font-weight: 500;
+        color: white;
+      }
+    }
   }
   #listContainer {
     grid-area: b;
     border-radius: 10px;
     background-color: rgb(217, 233, 227);
+    border-radius: 5px;
     z-index: 2;
   }
   #doneContainer {
     grid-area: c;
+    margin-top: 20px;
     // padding: 10px;
     z-index: 2;
   }
   ul {
     li {
+      border-radius: 5px;
       list-style: none;
       display: grid;
-      grid-template-columns: 40px auto 40px;
+      grid-template-columns: 40px auto 40px 40px;
       grid-template-rows: 40px;
-      grid-template-areas: "a b c";
+      grid-template-areas: "a b c d";
       padding: 5px;
       align-items: center;
       list-style-type: none;
       background: #e9f2ee;
-      transition: 0.2s;
       user-select: none;
-      p {
-        grid-area: b;
-        justify-self: start;
-        padding: 10px;
+
+      input {
+        &[type="checkbox"] {
+          grid-area: a;
+          justify-self: center;
+          cursor: pointer;
+          border: none;
+          width: 15px;
+          height: 15px;
+        }
+        &[type="text"] {
+          grid-area: b;
+          padding: 10px;
+          border-style: none;
+          cursor: text;
+          background-color: transparent;
+          color: #26523e;
+          font-size: 1em;
+          outline: none;
+          &.true {
+            text-decoration: line-through;
+          }
+          &:focus {
+            background-color: white;
+          }
+        }
       }
+
+      i {
+        justify-self: center;
+        padding: 10px;
+        cursor: pointer;
+        color: #4b504b;
+        &.fa-pencil {
+          grid-area: c;
+        }
+        &.fa-floppy-disk {
+          grid-area: c;
+          color: red;
+        }
+        &.fa-xmark.fa-lg {
+          grid-area: d;
+          line-height: 1;
+          color: red;
+        }
+        &:hover {
+          background-color: #526f62;
+          color: white;
+          border-radius: 10%;
+        }
+      }
+
       &:nth-child(even) {
         background-color: #d9e9e3;
       }
@@ -79,59 +152,8 @@ main {
       }
       &.true {
         background-color: #6d9181;
-        text-decoration: line-through;
+        opacity: 0.8;
       }
     }
-  }
-}
-
-input {
-  &[type="text"] {
-    border: 1px solid #26523e;
-    padding: 10px;
-    min-width: 150px;
-    height: 30px;
-    border-style: none;
-    cursor: text;
-
-    background-color: #d9e9e3;
-    border-radius: 10px 0px 0px 10px;
-    color: #26523e;
-  }
-  &[type="submit"] {
-    border: none;
-    padding: 10px;
-    width: 100px;
-    height: 50px;
-    cursor: pointer;
-    background-color: #26523e;
-    border-radius: 0px 30px 30px 0px;
-    font-family: "Raleway", sans-serif;
-    font-weight: 500;
-    color: white;
-  }
-  &[type="checkbox"] {
-    grid-area: a;
-    justify-self: center;
-    cursor: pointer;
-    border: none;
-    width: 15px;
-    height: 15px;
-    &:active {
-      background-color: #6d9181;
-      text-decoration: line-through;
-    }
-  }
-}
-
-img {
-  grid-area: c;
-  justify-self: center;
-  padding: 10px;
-  width: 20px;
-  &:hover {
-    background-color: #26523e;
-    color: white;
-    border-radius: 10%;
   }
 }

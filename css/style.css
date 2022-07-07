@@ -1,9 +1,6 @@
 * {
   margin: 0;
   padding: 0;
-}
-
-body {
   font-family: "Raleway", sans-serif;
 }
 
@@ -19,7 +16,7 @@ header {
           justify-content: center;
   height: 100px;
   background-color: #26523e;
-  color: white;
+  color: #e9f2ee;
 }
 
 main {
@@ -60,12 +57,41 @@ main #inputContainer {
   z-index: 2;
 }
 
+main #inputContainer input[type="text"] {
+  padding: 10px;
+  min-width: 150px;
+  height: 30px;
+  border-style: none;
+  cursor: text;
+  background-color: #d9e9e3;
+  border-radius: 10px 0px 0px 10px;
+  color: #26523e;
+}
+
+main #inputContainer input[type="text"]:focus {
+  outline: 1px solid #26523e;
+}
+
+main #inputContainer input[type="submit"] {
+  border: none;
+  padding: 10px;
+  width: 100px;
+  height: 50px;
+  cursor: pointer;
+  background-color: #26523e;
+  border-radius: 0px 10px 10px 0px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 500;
+  color: white;
+}
+
 main #listContainer {
   -ms-grid-row: 1;
   -ms-grid-column: 2;
   grid-area: b;
   border-radius: 10px;
   background-color: #d9e9e3;
+  border-radius: 5px;
   z-index: 2;
 }
 
@@ -73,39 +99,98 @@ main #doneContainer {
   -ms-grid-row: 1;
   -ms-grid-column: 3;
   grid-area: c;
+  margin-top: 20px;
   z-index: 2;
 }
 
 main ul li {
+  border-radius: 5px;
   list-style: none;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 40px auto 40px;
-      grid-template-columns: 40px auto 40px;
+  -ms-grid-columns: 40px auto 40px 40px;
+      grid-template-columns: 40px auto 40px 40px;
   -ms-grid-rows: 40px;
       grid-template-rows: 40px;
-      grid-template-areas: "a b c";
+      grid-template-areas: "a b c d";
   padding: 5px;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   list-style-type: none;
   background: #e9f2ee;
-  -webkit-transition: 0.2s;
-  transition: 0.2s;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
 }
 
-main ul li p {
+main ul li input[type="checkbox"] {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: a;
+  -ms-grid-column-align: center;
+      justify-self: center;
+  cursor: pointer;
+  border: none;
+  width: 15px;
+  height: 15px;
+}
+
+main ul li input[type="text"] {
   -ms-grid-row: 1;
   -ms-grid-column: 2;
   grid-area: b;
-  -ms-grid-column-align: start;
-      justify-self: start;
   padding: 10px;
+  border-style: none;
+  cursor: text;
+  background-color: transparent;
+  color: #26523e;
+  font-size: 1em;
+  outline: none;
+}
+
+main ul li input[type="text"].true {
+  text-decoration: line-through;
+}
+
+main ul li input[type="text"]:focus {
+  background-color: white;
+}
+
+main ul li i {
+  -ms-grid-column-align: center;
+      justify-self: center;
+  padding: 10px;
+  cursor: pointer;
+  color: #4b504b;
+}
+
+main ul li i.fa-pencil {
+  -ms-grid-row: 1;
+  -ms-grid-column: 3;
+  grid-area: c;
+}
+
+main ul li i.fa-floppy-disk {
+  -ms-grid-row: 1;
+  -ms-grid-column: 3;
+  grid-area: c;
+  color: red;
+}
+
+main ul li i.fa-xmark.fa-lg {
+  -ms-grid-row: 1;
+  -ms-grid-column: 4;
+  grid-area: d;
+  line-height: 1;
+  color: red;
+}
+
+main ul li i:hover {
+  background-color: #526f62;
+  color: white;
+  border-radius: 10%;
 }
 
 main ul li:nth-child(even) {
@@ -118,64 +203,6 @@ main ul li:hover {
 
 main ul li.true {
   background-color: #6d9181;
-  text-decoration: line-through;
-}
-
-input[type="text"] {
-  border: 1px solid #26523e;
-  padding: 10px;
-  min-width: 150px;
-  height: 30px;
-  border-style: none;
-  cursor: text;
-  background-color: #d9e9e3;
-  border-radius: 10px 0px 0px 10px;
-  color: #26523e;
-}
-
-input[type="submit"] {
-  border: none;
-  padding: 10px;
-  width: 100px;
-  height: 50px;
-  cursor: pointer;
-  background-color: #26523e;
-  border-radius: 0px 30px 30px 0px;
-  font-family: "Raleway", sans-serif;
-  font-weight: 500;
-  color: white;
-}
-
-input[type="checkbox"] {
-  -ms-grid-row: 1;
-  -ms-grid-column: 1;
-  grid-area: a;
-  -ms-grid-column-align: center;
-      justify-self: center;
-  cursor: pointer;
-  border: none;
-  width: 15px;
-  height: 15px;
-}
-
-input[type="checkbox"]:active {
-  background-color: #6d9181;
-  text-decoration: line-through;
-}
-
-img {
-  -ms-grid-row: 1;
-  -ms-grid-column: 3;
-  grid-area: c;
-  -ms-grid-column-align: center;
-      justify-self: center;
-  padding: 10px;
-  width: 20px;
-}
-
-img:hover {
-  background-color: #26523e;
-  color: white;
-  border-radius: 10%;
+  opacity: 0.8;
 }
 /*# sourceMappingURL=style.css.map */
